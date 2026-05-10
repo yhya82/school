@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
+            $table->string('class_name');
+            $table->string('level');
             $table->timestamps();
         });
     }
