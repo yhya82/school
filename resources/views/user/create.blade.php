@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{route('users.index',)}}">users</a>
     <form action="{{route('users.store')}}" method="POST">
         @csrf
         <label>Name</label>

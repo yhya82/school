@@ -11,4 +11,12 @@ class Classes extends Model
         'class_name',
         'level'
     ];
+
+    public function students(){
+        return $this->hasMany(Student::class);
+    }
+
+    public function teacher(){
+        return $this->belongsTo(Teacher::class);
+    }
 }

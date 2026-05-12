@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -11,29 +12,40 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::with('user')->get();
+
+        return view('teacher.index',compact('teachers'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    //pass a single user instead of all the users 
+    public function create(User $user)
     {
-        return view('teacher.create');
+        
+        return view('teacher.create',compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+
+            
+            'gender' => 'required',
+            'qualification' => 'required',
+            'date_of_birth' => 'required',
         ]);
 
-        Teacher::create($request->all());
+        Teacher::create([
+            'user_id' => $user->id,
+            'gender' => $request->gender,
+            'qualification' => $request->qualification,
+            'date_of_birth' => $request->date_of_birth,
+        ]);
         
         return redirect()->route('teachers.index')->with('success', 'teacher created successfuly');
     }
@@ -49,9 +61,9 @@ class TeacherController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function edit(Teacher $teacher, User $user)
     {
-        return view('teacher.edit', compact('teacher'));
+        return view('teacher.edit', compact('teacher','user'));
     }
 
     /**
@@ -60,12 +72,16 @@ class TeacherController extends Controller
     public function update(Request $request, Teacher $teacher)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required'
+            'gender' => 'required',
+            'qualification' => 'required',
+            'date_of_birth' => 'required',
         ]);
 
-        $teacher->update([$request->all()]);
+        $teacher->update([
+            'gender' => $request->gender,
+            'qualification' => $request->qualification,
+            'date_of_birth' => $request->date_of_birth,
+        ]);
 
         return redirect()->route('teachers.index')->with('Success', 'Teacher updated Successfully');
 

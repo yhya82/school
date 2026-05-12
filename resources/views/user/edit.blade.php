@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{route('users.index',)}}">users</a>
     <form action="{{route('users.update', $user)}}" method="POST">
         @csrf
         @method('PUT')

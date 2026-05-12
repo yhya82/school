@@ -7,12 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
+        'user_id',
         'class_id',
-        'first_name',
+        
         'last_name',
+        'gender',
+        'date_of_birth',
     ];
 
     public function user(){
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function class(){
+        return $this->belongsTo(Classes::class);
+    }
+    public function marks(){
+        return $this->hasMany(Mark::class);
     }
 }

@@ -9,6 +9,15 @@ class Mark extends Model
     protected $fillable = [
         'student_id',
         'subject_id',
-        'score'
+        'score',
+        'grade'
     ];
+
+    public function student(){
+        return $this->belongsTo(Student::class);
+    }
+
+    public function subject(){
+        return $this->belongsTo(Subject::class);
+    }
 }

@@ -11,4 +11,12 @@ class Subject extends Model
         'subject_name',
         'code'
     ];
+
+    public function teacher(){
+        return $this->belongsTo(Teacher::class);
+    }
+    
+     public function marks(){
+        return $this->hasMany(Mark::class);
+    }
 }
